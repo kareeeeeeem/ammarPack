@@ -1,6 +1,6 @@
 {
-  "name": "Fast Scaling Trade",
-  "short_name": "FST",
+  "name": "Ammar Pack",
+  "short_name": "Ammar Pack",
   "icons": [
     {
       "src": "/icon-192.png",
@@ -13,7 +13,7 @@
       "type": "image/png"
     }
   ],
-  "theme_color": "#0f172a",
+  "theme_color": "#b77739",
   "background_color": "#ffffff",
   "display": "standalone"
 }

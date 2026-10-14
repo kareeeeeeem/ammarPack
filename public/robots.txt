@@ -1,4 +1,3 @@
 User-agent: *
 Allow: /
-
-Sitemap: https://fastscalingai.com/sitemap.xml
+Sitemap: https://www.ammarpack.com/sitemap.xml

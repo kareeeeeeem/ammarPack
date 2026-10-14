@@ -4,8 +4,8 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['var(--font-inter)', 'system-ui', 'sans-serif'],
-        display: ['var(--font-playfair)', 'Georgia', 'serif'],
+        sans: ['Arial', 'system-ui', 'sans-serif'],
+        display: ['Georgia', 'serif'],
       },
       colors: {
         brand: {
@@ -22,16 +22,16 @@ module.exports = {
           950: '#020617',
         },
         accent: {
-          50: '#f0fdfa',
-          100: '#ccfbf1',
-          200: '#99f6e4',
-          300: '#5eead4',
-          400: '#2dd4bf',
-          500: '#14b8a6',
-          600: '#0d9488',
-          700: '#0f766e',
-          800: '#115e59',
-          900: '#134e4a',
+          50: '#fff7ed',
+          100: '#ffedd5',
+          200: '#fed7aa',
+          300: '#fdba74',
+          400: '#fb923c',
+          500: '#d97732',
+          600: '#b77739',
+          700: '#965727',
+          800: '#783e1e',
+          900: '#5b2d16',
         },
         surface: {
           50: '#fafafa',

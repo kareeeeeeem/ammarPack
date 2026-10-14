@@ -17,6 +17,7 @@ export default function PageHero({ title, subtitle, imageSrc, imageAlt }: PageHe
         alt={imageAlt}
         fill
         priority
+        sizes="100vw"
         className="object-cover object-center"
         unoptimized
       />
@@ -26,7 +27,7 @@ export default function PageHero({ title, subtitle, imageSrc, imageAlt }: PageHe
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <FadeIn>
           <div className="inline-block bg-accent-500/20 border border-accent-400/30 rounded-full px-4 py-1.5 mb-6">
-            <span className="text-accent-300 text-xs font-medium tracking-wide uppercase">Fast Scaling Trade</span>
+            <span className="text-accent-300 text-xs font-medium tracking-wide uppercase">Ammar Pack · Egypt</span>
           </div>
         </FadeIn>
         <FadeIn delay={0.1}>

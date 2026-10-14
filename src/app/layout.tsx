@@ -1,44 +1,32 @@
 import type { Metadata } from 'next';
-import { Inter, Playfair_Display } from 'next/font/google';
 import './globals.css';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import WhatsAppButton from '@/components/WhatsAppButton';
-
-const inter = Inter({
-  subsets: ['latin'],
-  variable: '--font-inter',
-  display: 'swap',
-});
-
-const playfair = Playfair_Display({
-  subsets: ['latin'],
-  variable: '--font-playfair',
-  weight: ['700'],
-  display: 'swap',
-});
+import siteConfig from '../../site.config';
 
 export const metadata: Metadata = {
   title: {
-    default: 'Fast Scaling Trade | Premium Indian Export Partner',
-    template: '%s | Fast Scaling Trade',
+    default: 'Ammar Pack | Cardboard Box Manufacturer in Egypt',
+    template: '%s | Ammar Pack',
   },
-  description: 'Fast Scaling Trade is a trusted Indian export partner specializing in jaggery, textiles, leather, carpets, handicrafts, spices, and more. Serving Africa, Middle East, UK, and Asia.',
-  keywords: 'Fast Scaling Trade, Indian exporter, jaggery export, textiles export, Africa trade, Tanzania importer, export from India, international trade',
-  metadataBase: new URL('https://fastscalingai.com'),
+  description: 'Ammar Pack is a cardboard and corrugated packaging manufacturer in Banha, Egypt. Discuss custom cartons, printed boxes, and packaging for your business.',
+  keywords: ['Ammar Pack', 'corrugated box manufacturer in Egypt', 'cardboard packaging manufacturer', 'custom cardboard boxes', 'corrugated shipping boxes', 'custom printed packaging'],
+  metadataBase: new URL(siteConfig.domain),
+  alternates: { canonical: '/' },
   openGraph: {
-    title: 'Fast Scaling Trade | Premium Indian Export Partner',
-    description: 'Connecting verified Indian manufacturers with international buyers across Africa, Middle East, UK, and Asia. 11+ product categories, competitive pricing, on-time delivery.',
-    url: 'https://fastscalingai.com',
-    siteName: 'Fast Scaling Trade',
-    images: [{ url: '/og-image.jpg', width: 1200, height: 630, alt: 'Fast Scaling Trade' }],
-    locale: 'en_US',
+    title: 'Ammar Pack | Cardboard Box Manufacturer in Egypt',
+    description: 'Cardboard cartons and packaging made in Banha, Egypt. Explore Ammar Pack and request a quotation.',
+    url: siteConfig.domain,
+    siteName: 'Ammar Pack',
+    images: [{ url: '/og-image.jpg', width: 1200, height: 630, alt: 'Ammar Pack cardboard packaging' }],
+    locale: 'en_GB',
     type: 'website',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Fast Scaling Trade | Premium Indian Export Partner',
-    description: 'Connecting verified Indian manufacturers with international buyers. 11+ product categories, competitive pricing, on-time delivery.',
+    title: 'Ammar Pack | Cardboard Box Manufacturer in Egypt',
+    description: 'Cardboard cartons and packaging made in Banha, Egypt.',
     images: ['/og-image.jpg'],
   },
   icons: {
@@ -61,26 +49,25 @@ export const metadata: Metadata = {
 const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'Organization',
-  name: 'Fast Scaling Trade',
-  url: 'https://fastscalingai.com',
-  logo: 'https://fastscalingai.com/logo.png',
-  description: 'Premium Indian export partner connecting verified manufacturers with international buyers across Africa, Middle East, UK, and Asia.',
+  name: siteConfig.companyName,
+  url: siteConfig.domain,
+  logo: `${siteConfig.domain}/logo.png`,
+  description: 'Cardboard and carton manufacturer in Banha, Egypt.',
   address: {
     '@type': 'PostalAddress',
-    addressLocality: 'Delhi',
-    addressCountry: 'IN',
+    addressLocality: 'Banha',
+    addressRegion: 'Qalyubia',
+    addressCountry: 'EG',
   },
-  email: 'info@fastscalingai.com',
-  sameAs: [
-    'https://www.linkedin.com/company/fast-scaling-trade',
-  ],
+  email: siteConfig.email,
+  telephone: siteConfig.phone,
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${inter.variable} ${playfair.variable}`}>
+    <html lang="en">
       <head>
-        {/* Google Analytics — replace GA_MEASUREMENT_ID with your actual ID */}
+        {/* Optional analytics measurement ID */}
         {process.env.NEXT_PUBLIC_GA_ID && (
           <>
             <script async src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_ID}`} />

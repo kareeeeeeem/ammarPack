@@ -1,0 +1,16 @@
+import type { Metadata } from 'next';
+import { notFound } from 'next/navigation';
+import Image from 'next/image';
+import Link from 'next/link';
+import PageHero from '@/components/PageHero';
+import WhatsAppLink from '@/components/WhatsAppLink';
+import { products } from '@/lib/content';
+import { Check } from 'lucide-react';
+
+export function generateStaticParams() { return products.map(product => ({ slug: product.slug })); }
+export function generateMetadata({ params }: { params: { slug: string } }): Metadata { const product = products.find(p => p.slug === params.slug); return { title: product ? `${product.name} | Packaging Concepts` : 'Packaging Product', description: product?.description, alternates: { canonical: `/products/${params.slug}` }, openGraph: { title: product?.name || 'Packaging Product', description: product?.description, url: `/products/${params.slug}` } }; }
+export default function ProductPage({ params }: { params: { slug: string } }) {
+  const product = products.find(p => p.slug === params.slug);
+  if (!product) notFound();
+  return <><PageHero title={product.name} subtitle={product.short} imageSrc={product.image} imageAlt={`Illustrative packaging photo of ${product.name.toLowerCase()}`} /><section className="py-20"><div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid md:grid-cols-2 gap-12 items-center"><div><p className="text-xs uppercase tracking-[0.2em] text-accent-700 font-bold mb-4">Packaging concept</p><h2 className="font-display text-4xl font-bold text-brand-900 mb-5">A practical brief for {product.name.toLowerCase()}</h2><p className="text-brand-600 leading-relaxed mb-7">{product.description}</p><h3 className="font-semibold text-brand-900 mb-3">Points to discuss</h3><ul className="space-y-3 text-brand-600 mb-7">{product.features.map(feature => <li key={feature} className="flex items-start gap-3"><Check className="w-5 h-5 text-accent-600 shrink-0 mt-0.5" />{feature}</li>)}</ul><p className="text-sm text-brand-600 mb-8"><strong>Typical applications:</strong> {product.applications}. These are examples for discussion, not confirmed engineering specifications.</p><div className="flex flex-wrap gap-3"><Link href={`/quote?category=${encodeURIComponent(product.name)}`} className="rounded-full bg-brand-900 px-7 py-3.5 text-white font-semibold">Build a quote</Link><WhatsAppLink kind="product" product={product.name} className="rounded-full border border-brand-200 px-7 py-3.5 text-brand-900 font-semibold hover:border-accent-600">Ask on WhatsApp</WhatsAppLink></div></div><div className="rounded-3xl overflow-hidden bg-brand-50 border border-brand-100"><Image src={product.image} alt={`Illustrative packaging photo of ${product.name.toLowerCase()}`} width={900} height={600} className="w-full h-auto" unoptimized /></div></div></section><section className="py-16 bg-brand-50/50"><div className="max-w-4xl mx-auto px-4 text-center"><h2 className="font-display text-3xl font-bold text-brand-900 mb-3">Dimensions still uncertain?</h2><p className="text-brand-600 mb-6">The dimension assistant can help you describe length, width, and height before requesting a quotation.</p><Link href="/dimensions" className="text-accent-700 underline font-semibold">Open dimension guide</Link></div></section></>;
+}

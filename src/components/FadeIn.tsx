@@ -1,5 +1,5 @@
 'use client';
-import { motion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 
 interface FadeInProps {
   children: React.ReactNode;
@@ -9,9 +9,10 @@ interface FadeInProps {
 }
 
 export default function FadeIn({ children, delay = 0, direction = 'up', className }: FadeInProps) {
+  const reduceMotion = useReducedMotion();
   return (
     <motion.div
-      initial={{
+      initial={reduceMotion ? false : {
         opacity: 0,
         y: direction === 'up' ? 32 : 0,
         x: direction === 'left' ? -32 : direction === 'right' ? 32 : 0,
@@ -21,7 +22,7 @@ export default function FadeIn({ children, delay = 0, direction = 'up', classNam
         y: 0,
         x: 0,
       }}
-      transition={{ duration: 0.6, delay, ease: [0.21, 0.47, 0.32, 0.98] as const }}
+      transition={{ duration: reduceMotion ? 0 : 0.6, delay: reduceMotion ? 0 : delay, ease: [0.21, 0.47, 0.32, 0.98] as const }}
       viewport={{ once: true, margin: '-80px' }}
       className={className}
     >

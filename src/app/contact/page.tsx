@@ -1,115 +1,30 @@
 import type { Metadata } from 'next';
-import ContactForm from '@/components/ContactForm';
+import Link from 'next/link';
 import PageHero from '@/components/PageHero';
+import ContactForm from '@/components/ContactForm';
 import FadeIn from '@/components/FadeIn';
-import { Mail, Package, MapPin, Clock, CheckCircle2, Shield } from 'lucide-react';
+import WhatsAppLink from '@/components/WhatsAppLink';
+import siteConfig from '../../../site.config';
+import { Mail, MapPin, Phone, Clock, MessageCircle, ArrowRight } from 'lucide-react';
 
-export const metadata: Metadata = {
-  title: 'Contact Us',
-  description: 'Get a customized export quotation within 24 hours. Contact Fast Scaling Trade for product sourcing, pricing, samples, and shipping from India.',
-};
-
-const contactInfo = [
-  { icon: Mail, label: 'General Inquiries', value: 'info@fastscalingai.com', link: 'mailto:info@fastscalingai.com' },
-  { icon: Package, label: 'Export & Sales', value: 'exports@fastscalingai.com', link: 'mailto:exports@fastscalingai.com' },
-  { icon: MapPin, label: 'Office', value: 'Delhi, India', link: null },
-  { icon: Clock, label: 'Response Time', value: 'Within 24 hours', link: null },
+export const metadata: Metadata = { title: 'Contact & Request a Quote', description: 'Contact Ammar Pack in Mit Asem, Banha, Egypt for cardboard boxes, corrugated cartons, and custom packaging inquiries.', alternates: { canonical: '/contact' }, openGraph: { title: 'Contact & Request a Quote', description: 'Contact Ammar Pack in Mit Asem, Banha, Egypt for cardboard boxes, corrugated cartons, and custom packaging inquiries.', url: '/contact' } };
+const directions = 'https://maps.google.com/?q=Mit+Asem%2C+Ammar+Pack%2C+Banha%2C+Al+Qalyubia+Governorate%2C+Egypt';
+const details = [
+  { icon: Phone, label: 'Phone', value: siteConfig.phone, href: 'tel:+201155053159' },
+  { icon: Mail, label: 'Email', value: siteConfig.email, href: `mailto:${siteConfig.email}` },
+  { icon: MapPin, label: 'Factory area', value: siteConfig.location, href: directions },
+  { icon: Clock, label: 'Working hours', value: siteConfig.hours, href: '' },
+];
+const faqs = [
+  { q: 'What details help with a quotation?', a: 'Tell us what you are packing, approximate internal dimensions, quantity, printing requirements, and delivery city. If you are unsure, the quote builder lets you say so.' },
+  { q: 'Can I ask about a minimum order quantity?', a: 'Yes. Minimum quantities depend on the packaging brief and should be confirmed directly with Ammar Pack.' },
+  { q: 'Can I arrange a factory visit?', a: 'Contact the team to ask whether a visit can be arranged and to confirm availability before traveling.' },
+  { q: 'Is a WhatsApp message an order?', a: 'No. Opening a prepared message starts a conversation. Specifications, terms, and any order must be confirmed directly with Ammar Pack.' },
 ];
 
-const benefits = [
-  'Free product sourcing consultation',
-  'Custom quotation within 24 hours',
-  'Sample arrangement available',
-  'Flexible payment terms (TT, LC)',
-  'FOB / CIF / DDP pricing',
-  'No minimum order for samples',
-];
-
-const certifications = [
-  'IEC Registered Exporter',
-  'GST Registered',
-  'RCMC (Export Promotion Council)',
-  'FIEO Member',
-  'AD Code Registered',
-];
-
-export default function ContactPage() {
-  return (
-    <>
-      <PageHero
-        title="Get in Touch"
-        subtitle="Get a customized quotation within 24 hours. Tell us what you need, and we will find the best sourcing solution for you."
-        imageSrc="/images/heroes/contact.jpg"
-        imageAlt="Modern office"
-      />
-
-      <section className="py-24">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid lg:grid-cols-3 gap-12">
-            {/* Contact Form */}
-            <div className="lg:col-span-2">
-              <FadeIn>
-                <h2 className="font-display text-2xl md:text-3xl font-bold text-brand-900 mb-8">Send Us an Inquiry</h2>
-                <ContactForm />
-              </FadeIn>
-            </div>
-
-            {/* Sidebar */}
-            <div className="space-y-5">
-              <FadeIn delay={0.1}>
-                <div className="bg-white rounded-2xl p-6 border border-brand-100 shadow-elevated">
-                  <h3 className="font-display font-bold text-brand-900 mb-5 text-lg">Contact Details</h3>
-                  <div className="space-y-4">
-                    {contactInfo.map((c) => (
-                      <div key={c.label} className="flex gap-3">
-                        <div className="w-9 h-9 bg-brand-50 rounded-xl flex items-center justify-center flex-shrink-0">
-                          <c.icon className="w-4 h-4 text-brand-500" />
-                        </div>
-                        <div>
-                          <div className="text-[10px] text-brand-400 font-medium uppercase tracking-wide">{c.label}</div>
-                          {c.link ? (
-                            <a href={c.link} className="text-sm font-semibold text-accent-600 hover:text-accent-700 transition-colors">{c.value}</a>
-                          ) : (
-                            <div className="text-sm font-semibold text-brand-800">{c.value}</div>
-                          )}
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </FadeIn>
-
-              <FadeIn delay={0.15}>
-                <div className="bg-accent-50 rounded-2xl p-6 border border-accent-100">
-                  <h3 className="font-display font-bold text-brand-900 mb-4 text-lg">Why Contact Us?</h3>
-                  <ul className="space-y-2.5 text-sm text-brand-700">
-                    {benefits.map((b) => (
-                      <li key={b} className="flex gap-2.5 items-start">
-                        <CheckCircle2 className="w-4 h-4 text-accent-600 mt-0.5 flex-shrink-0" />
-                        <span>{b}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </FadeIn>
-
-              <FadeIn delay={0.2}>
-                <div className="bg-brand-50 rounded-2xl p-6 border border-brand-100">
-                  <h3 className="font-display font-bold text-brand-900 mb-4 text-lg">Certifications</h3>
-                  <ul className="space-y-2 text-sm text-brand-700">
-                    {certifications.map((c) => (
-                      <li key={c} className="flex gap-2.5 items-start">
-                        <Shield className="w-4 h-4 text-brand-500 mt-0.5 flex-shrink-0" />
-                        <span>{c}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </FadeIn>
-            </div>
-          </div>
-        </div>
-      </section>
-    </>
-  );
-}
+export default function ContactPage() { return <>
+  <PageHero title="Let’s talk packaging" subtitle="Share what you need to pack, the approximate quantity, dimensions, and any printing requirements. We’ll help you take the next step." imageSrc="/images/heroes/contact.svg" imageAlt="Illustrated cardboard packaging" />
+  <section className="py-16 bg-white"><div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid sm:grid-cols-3 gap-4"><Link href="/quote" className="group rounded-2xl border border-brand-100 bg-brand-50 p-6 hover:border-accent-500 transition"><span className="text-xs font-bold uppercase tracking-widest text-accent-700">Detailed brief</span><h2 className="font-display text-xl font-bold text-brand-900 mt-3">Build a quote</h2><p className="text-sm text-brand-600 mt-2">Organize dimensions, quantity, print, and delivery.</p><ArrowRight className="w-5 h-5 text-accent-600 mt-5 group-hover:translate-x-1 transition" /></Link><WhatsAppLink kind="consultation" className="group rounded-2xl border border-brand-100 bg-brand-50 p-6 hover:border-accent-500 transition"><span className="text-xs font-bold uppercase tracking-widest text-accent-700">Packaging advice</span><h2 className="font-display text-xl font-bold text-brand-900 mt-3">Ask on WhatsApp</h2><p className="text-sm text-brand-600 mt-2">Start a conversation about the right box.</p><MessageCircle className="w-5 h-5 text-accent-600 mt-5" /></WhatsAppLink><WhatsAppLink kind="visit" className="group rounded-2xl border border-brand-100 bg-brand-50 p-6 hover:border-accent-500 transition"><span className="text-xs font-bold uppercase tracking-widest text-accent-700">Meet the team</span><h2 className="font-display text-xl font-bold text-brand-900 mt-3">Ask about a visit</h2><p className="text-sm text-brand-600 mt-2">Check whether a factory visit can be arranged.</p><MapPin className="w-5 h-5 text-accent-600 mt-5" /></WhatsAppLink></div></section>
+  <section className="py-20 bg-brand-50/50"><div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid lg:grid-cols-3 gap-12"><FadeIn className="lg:col-span-2"><div className="bg-white rounded-2xl border border-brand-100 shadow-elevated p-6 md:p-10"><span className="text-accent-700 uppercase tracking-[0.2em] text-xs font-bold">Direct inquiry</span><h2 className="font-display text-3xl font-bold text-brand-900 mt-3 mb-3">Send a message</h2><p className="text-brand-600 mb-8">Use the contact form if online submission is configured, or choose email and WhatsApp below.</p><ContactForm /></div></FadeIn><FadeIn delay={0.1}><div className="space-y-5"><div className="bg-white rounded-2xl p-7 border border-brand-100"><h2 className="font-display text-xl font-bold text-brand-900 mb-6">Contact details</h2><div className="space-y-6">{details.map(d => <div key={d.label} className="flex gap-3"><d.icon className="w-5 h-5 text-accent-600 shrink-0 mt-1" /><div><p className="text-xs text-brand-500 uppercase tracking-wide mb-1">{d.label}</p>{d.href ? <a href={d.href} target={d.label === 'Factory area' ? '_blank' : undefined} rel={d.label === 'Factory area' ? 'noopener noreferrer' : undefined} className="text-sm font-semibold text-brand-800 hover:text-accent-700">{d.value}</a> : <p className="text-sm font-semibold text-brand-800">{d.value}</p>}</div></div>)}</div></div><WhatsAppLink kind="general" className="flex gap-3 items-center justify-center bg-[#128C57] text-white rounded-2xl p-5 font-bold hover:brightness-95 transition"><MessageCircle className="w-5 h-5" />General WhatsApp inquiry</WhatsAppLink><WhatsAppLink kind="moq" className="block text-center rounded-2xl border border-accent-200 bg-accent-50 p-5 text-accent-800 font-semibold hover:border-accent-500">Ask about minimum order quantity</WhatsAppLink><div className="bg-white rounded-2xl p-7 text-sm text-brand-700 leading-relaxed border border-brand-100"><strong className="block mb-2 text-brand-900">Helpful details to include</strong>Product dimensions, packed weight, approximate quantity, delivery city, and any logo or print requirements.</div></div></FadeIn></div></section>
+  <section className="py-20 bg-white"><div className="max-w-4xl mx-auto px-4 sm:px-6"><h2 className="font-display text-3xl md:text-4xl font-bold text-brand-900 mb-8 text-center">Common questions</h2><div className="space-y-3">{faqs.map(item => <details key={item.q} className="group rounded-2xl border border-brand-100 p-5 md:p-6"><summary className="cursor-pointer font-semibold text-brand-900 marker:text-accent-600">{item.q}</summary><p className="mt-4 text-sm leading-relaxed text-brand-600">{item.a}</p></details>)}</div></div></section>
+</>; }

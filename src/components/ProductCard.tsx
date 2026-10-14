@@ -1,65 +1,20 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, Check } from 'lucide-react';
 
 interface ProductCardProps {
-  name: string;
-  hsCode: string;
-  margin: string;
-  indiaRank: string;
-  description: string;
-  moq: string;
-  packaging: string;
-  imageSrc: string;
+  slug: string; name: string; description: string; features: string[]; applications: string; image: string;
 }
 
-export default function ProductCard({ name, hsCode, margin, indiaRank, description, moq, packaging, imageSrc }: ProductCardProps) {
-  return (
-    <div className="group bg-white rounded-2xl border border-brand-100 overflow-hidden card-hover flex flex-col">
-      {/* Image */}
-      <div className="relative h-48 overflow-hidden">
-        <Image
-          src={imageSrc}
-          alt={name}
-          fill
-          className="object-cover group-hover:scale-105 transition-transform duration-700"
-          unoptimized
-        />
-        <div className="absolute top-3 right-3 bg-brand-900/80 backdrop-blur-sm text-accent-400 text-[11px] font-bold px-3 py-1.5 rounded-full">
-          {margin} Margin
-        </div>
-        <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/50 to-transparent h-20" />
-      </div>
-
-      {/* Content */}
-      <div className="p-6 flex flex-col flex-1">
-        <h3 className="font-display text-lg font-bold text-brand-900 mb-1">{name}</h3>
-        <p className="text-xs text-brand-400 mb-3">HS Code: {hsCode}</p>
-        <p className="text-sm text-brand-600 mb-5 flex-1 leading-relaxed">{description}</p>
-
-        <div className="grid grid-cols-3 gap-2 text-xs mb-5">
-          <div className="bg-accent-50 rounded-xl px-2.5 py-2.5 text-center">
-            <div className="text-brand-400 text-[10px] uppercase tracking-wide">Rank</div>
-            <div className="font-bold text-accent-700 mt-0.5">{indiaRank}</div>
-          </div>
-          <div className="bg-brand-50 rounded-xl px-2.5 py-2.5 text-center">
-            <div className="text-brand-400 text-[10px] uppercase tracking-wide">MOQ</div>
-            <div className="font-bold text-brand-700 mt-0.5">{moq}</div>
-          </div>
-          <div className="bg-brand-50 rounded-xl px-2.5 py-2.5 text-center">
-            <div className="text-brand-400 text-[10px] uppercase tracking-wide">Pkg</div>
-            <div className="font-bold text-brand-700 mt-0.5">{packaging}</div>
-          </div>
-        </div>
-
-        <Link
-          href="/contact"
-          className="inline-flex items-center justify-center gap-2 text-sm font-semibold text-brand-900 bg-brand-50 hover:bg-brand-100 py-2.5 rounded-xl transition-all duration-300 group/btn"
-        >
-          Request Quote
-          <ArrowRight className="w-3.5 h-3.5 group-hover/btn:translate-x-1 transition-transform" />
-        </Link>
-      </div>
+export default function ProductCard({ slug, name, description, features, applications, image }: ProductCardProps) {
+  return <article className="group bg-white rounded-2xl border border-brand-100 overflow-hidden card-hover flex flex-col h-full">
+    <div className="relative h-56 overflow-hidden bg-amber-50"><Image src={image} alt={`Illustrative packaging photo of ${name.toLowerCase()}`} fill className="object-cover group-hover:scale-105 transition-transform duration-700" unoptimized /></div>
+    <div className="p-6 flex flex-col flex-1">
+      <h2 className="font-display text-xl font-bold text-brand-900 mb-3">{name}</h2>
+      <p className="text-sm text-brand-600 leading-relaxed mb-4">{description}</p>
+      <ul className="space-y-2 mb-5 text-sm text-brand-600">{features.map(feature => <li key={feature} className="flex gap-2"><Check className="w-4 h-4 mt-0.5 text-accent-600 shrink-0" />{feature}</li>)}</ul>
+      <p className="text-xs text-brand-500 mb-5 mt-auto"><strong className="text-brand-800">Typical applications:</strong> {applications}</p>
+      <div className="grid grid-cols-2 gap-2"><Link href={`/products/${slug}`} className="inline-flex items-center justify-center text-sm font-semibold text-brand-900 border border-brand-200 hover:border-accent-600 py-3 rounded-xl transition-all">View details</Link><Link href={`/quote?category=${encodeURIComponent(name)}`} className="inline-flex items-center justify-center gap-1 text-sm font-semibold text-white bg-brand-900 hover:bg-brand-800 py-3 rounded-xl transition-all">Get quote <ArrowRight className="w-4 h-4" /></Link></div>
     </div>
-  );
+  </article>;
 }
