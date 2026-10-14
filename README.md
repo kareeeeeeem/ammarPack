@@ -1,136 +1,101 @@
-# Export Business Website Template
+# Ammar Pack Website
 
-A premium, production-ready website template for export/trading businesses. Built with Next.js 14, Tailwind CSS, Framer Motion, and TypeScript.
+English-language website for **Ammar Pack**, a cardboard carton and packaging manufacturer in Banha, Egypt. The site presents packaging concepts, product planning tools, a quotation builder, and contact options. It is built as a static export and does not require an application server or database.
 
-**Live demo:** [fastscalingai.com](https://fastscalingai.com)
+This project is adapted from [rohit96/export-website-template](https://github.com/rohit96/export-website-template). The original Git history is retained.
 
-## Features
+## Technology and requirements
 
-- Premium design with scroll animations (Framer Motion)
-- Fully responsive (mobile, tablet, desktop)
-- Static export — deploys anywhere (Cloudflare Pages, Vercel, Netlify)
-- SEO optimized (Open Graph, Twitter Cards, sitemap, robots.txt)
-- Contact form via Web3Forms (free, no backend needed)
-- WhatsApp floating button
-- 6 pages: Home, About, Products, Markets, Blog/Resources, Contact
+- Next.js 14, React 18, TypeScript, Tailwind CSS 3, Framer Motion, and Lucide React.
+- Node.js 20 or later and npm for local development and builds.
+- A Cloudflare account with access to the existing Pages project is needed only for deployment.
 
-## Quick Start
+## Install and run locally
 
 ```bash
-# 1. Clone the repo
-git clone https://github.com/rohit96/export-website-template.git
-cd export-website-template
-
-# 2. Install dependencies
-npm install
-
-# 3. Run dev server
+npm ci
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) to see the site.
+Open `http://localhost:3000`.
 
-## Customize for Your Business
-
-All business-specific content is in **`site.config.ts`**. Update these fields:
-
-| Field | What to change |
-|-------|---------------|
-| `companyName` | Your company name |
-| `domain` | Your domain (e.g. `https://yourdomain.com`) |
-| `emails` | Your business email addresses |
-| `whatsapp` | Your WhatsApp number with country code |
-| `web3formsKey` | Your free key from [web3forms.com](https://web3forms.com) |
-| `products` | Your product catalog |
-| `markets` | Countries you serve |
-| `about` | Your company story & milestones |
-| `hero` | Homepage headline & description |
-
-### Replace Images
-
-Images are in `public/images/`:
-- `heroes/` — Page hero backgrounds
-- `products/` — Product photos
-- `blog/` — Blog article images
-- `logo.png` — Your company logo
-- `og-image.jpg` — Social sharing image (1200x630)
-- `favicon.ico` — Browser tab icon
-
-### Update SEO
-
-1. Edit `site.config.ts` → `seo` section
-2. Update `public/sitemap.xml` with your domain
-3. Update `public/robots.txt` with your sitemap URL
-4. Replace `src/app/layout.tsx` metadata with your domain
-
-## Deploy to Cloudflare Pages
+## Production build and static export
 
 ```bash
-# Build the static site
+npx tsc --noEmit
+npm test
 npm run build
-
-# Deploy (first time — creates project)
-npx wrangler pages project create your-project-name --production-branch main
-npx wrangler pages deploy out --project-name your-project-name
-
-# Subsequent deploys
-npm run build && npx wrangler pages deploy out --project-name your-project-name
+npm run check:static
 ```
 
-Then add your custom domain in Cloudflare Pages dashboard → Custom domains.
+`next.config.js` sets `output: 'export'`. `npm run build` generates the static site in `out/`; `npm run check:static` verifies exported pages, local links, and assets. The build does not require a server API or an external font download. The `out/` directory is generated and should not be committed.
 
-## Deploy to Vercel
+## Project structure
+
+| Path | Purpose |
+| --- | --- |
+| `src/app/` | Pages, root layout, and homepage styles |
+| `src/components/` | Shared UI, quotation tools, and homepage motion |
+| `src/lib/content.ts` | Product, industry, and article content |
+| `src/lib/quote.ts`, `src/lib/whatsapp.ts` | Quotation validation and WhatsApp messages |
+| `public/` | Images, illustrations, icons, sitemap, and robots file |
+| `site.config.ts` | Business identity and contact information |
+| `test/` | Interactive flow and static export checks |
+| `next.config.js`, `tailwind.config.js`, `postcss.config.js`, `tsconfig.json` | Build and styling configuration |
+
+## Configuration and content
+
+Update the company name, domain, contact details, and WhatsApp number in `site.config.ts`. Review SEO metadata in `src/app/layout.tsx`, plus `public/sitemap.xml` and `public/robots.txt`, if the domain changes. Update product names, descriptions, applications, and image paths in `src/lib/content.ts`; keep the matching assets in `public/images/products/`. Product detail pages are generated from that content at build time. Edit the homepage in `src/app/page.tsx` and its dedicated motion and styles in `src/components/HomeMotion.tsx` and `src/app/home.module.css`.
+
+Replace temporary brand and packaging imagery only with assets approved for publication. Put optimized images in `public/images/` and update the paths in the relevant content or page component. The supplied originals remain in local `src/media/`, which is excluded from Git; the optimized factory WebP images in `public/images/factory/` and the short, muted H.264 clip in `public/media/` are the published versions. The clip has a poster, controls, and no automatic loading or playback. Confirm publication rights for supplied media before wider distribution. The older `public/images/ammar-factory-official.jpg` came from Ammar Pack's public gallery; its reuse rights should also be confirmed.
+
+## Interactive tools and WhatsApp quotations
+
+- `/quote` builds a packaging brief with dimensions, quantity, print needs, delivery city, and a review step. It opens a prepared WhatsApp or email message; the visitor sends it manually.
+- `/products` has client-side search, application filters, a three-product comparison, and a short product finder. Each product has a static detail page.
+- `/dimensions` shows a lightweight box diagram and transfers the entered measurements into `/quote` through the URL.
+- Contextual WhatsApp links cover general, product, custom packaging, quotation, factory visit, consultation, and minimum-order questions. Change the destination number in `site.config.ts` and message templates in `src/lib/whatsapp.ts`. The quote builder uses `src/lib/quote.ts` to prepare a structured message; opening WhatsApp does not send it automatically.
+- The homepage's PACKY mascot is procedural Three.js geometry in `src/components/packy/`. One persistent canvas follows scroll-linked waypoints through the hero, box story, products, process, factory photograph, and quote sections. It pauses when the page is hidden or the journey ends, and shows an illustrated, nonmoving fallback for reduced motion or unavailable WebGL. Visitors can click or tap it for reactions; no sound or external 3D asset is loaded.
+
+## Inquiry form
+
+The old template's Web3Forms key was removed. Set `NEXT_PUBLIC_WEB3FORMS_KEY` to a **new Ammar Pack-owned public access key** at build time to enable online submissions. Until then, the contact form opens prepared email or WhatsApp drafts using the entered details. A successful submission is shown only after Web3Forms returns success. Do not put private credentials in this variable.
+
+## Content and asset review
+
+The official [Ammar Pack website](https://www.ammarpack.com/) confirms the company name, slogan, factory location, phone, email, working hours, and general carton manufacturing/printing description. It does not publish capacity, certifications, precise product specifications, or minimum orders, so those claims are intentionally absent. The product and industry sections are illustrative inquiry categories and must be confirmed against Ammar Pack's actual offerings.
+
+Temporary content requiring replacement or approval:
+
+- `public/images/products/*studio.jpg` and `public/images/heroes/packaging-studio.jpg`: generated generic packaging studio photos, not photographs of Ammar Pack products or operations.
+- `public/images/products/*.svg` and `public/images/heroes/*.svg`: locally created packaging illustrations for editorial sections.
+- `public/logo.png`, favicon files, and the `Logo` component: temporary wordmark and icon pending the official vector brand files.
+- `public/og-image.jpg`: temporary social preview graphic.
+- `public/images/ammar-factory-official.jpg`: older 400×300 px image from Ammar Pack's public gallery, no longer used on the homepage.
+- Product descriptions, applications, and industry examples: editorial drafts for quotation conversations, subject to factory confirmation.
+
+Missing business information: official logo and brand guide, rights confirmation for supplied factory media, verified category-specific product photography, detailed product and board specifications, printing/finishing options, any certifications, production and lead-time information, quotation terms, and an Ammar Pack-owned Web3Forms key. None is assumed on the website.
+
+## Security status
+
+`npm audit fix` was run without `--force` and updated compatible dependencies. Before adding Wrangler, the audit reported 9 remaining findings (2 moderate, 6 high, 1 critical) in the existing Next.js and Tailwind dependency trees. With the Node 20-compatible Wrangler 3 deployment CLI installed as a development dependency, the audit reports 16 (4 moderate, 11 high, 1 critical). The additional findings are in development tooling, not the static site uploaded to Pages. Suggested fixes include major upgrades and should be handled in a separately tested dependency migration. The deployed static site does not run the Next.js server or image optimizer.
+
+## Cloudflare Pages deployment
+
+The production branch is `main` and the existing Pages project is named `ammar-pack`. Authenticate Wrangler with the Cloudflare account that owns that project. To publish a future update, commit and push the source to GitHub, then build and deploy the static output without changing DNS:
 
 ```bash
-npx vercel
+npm ci
+npx tsc --noEmit
+npm test
+npm run build
+npm run check:static
+npx wrangler pages deploy out --project-name ammar-pack --branch main
 ```
 
-Or connect your GitHub repo at [vercel.com](https://vercel.com).
+For source-only updates, run `git add -A`, `git commit -m "Describe the update"`, and `git push ammar-pack main` after reviewing the staged files. A GitHub push does not automatically deploy a direct-upload Pages project unless a separate Git integration has been configured.
 
-## Tech Stack
+## License and attribution
 
-- **Framework:** Next.js 14 (Static Export)
-- **Styling:** Tailwind CSS 3.4
-- **Animations:** Framer Motion
-- **Icons:** Lucide React
-- **Fonts:** Inter + Playfair Display (Google Fonts)
-- **Contact Form:** Web3Forms
-- **Language:** TypeScript
-
-## Project Structure
-
-```
-├── public/
-│   ├── images/          # All site images
-│   ├── logo.png         # Company logo
-│   ├── favicon.ico      # Browser icon
-│   ├── og-image.jpg     # Social sharing image
-│   ├── sitemap.xml      # SEO sitemap
-│   └── robots.txt       # Search engine directives
-├── src/
-│   ├── app/
-│   │   ├── page.tsx         # Homepage
-│   │   ├── about/           # About page
-│   │   ├── products/        # Products catalog
-│   │   ├── markets/         # Markets served
-│   │   ├── blog/            # Resources/blog
-│   │   ├── contact/         # Contact page
-│   │   ├── layout.tsx       # Root layout + SEO
-│   │   └── globals.css      # Global styles
-│   └── components/
-│       ├── Navbar.tsx       # Navigation bar
-│       ├── Footer.tsx       # Site footer
-│       ├── ContactForm.tsx  # Contact form
-│       ├── ProductCard.tsx  # Product display card
-│       ├── CountryCard.tsx  # Market display card
-│       ├── PageHero.tsx     # Page hero banner
-│       ├── FadeIn.tsx       # Scroll animation wrapper
-│       └── SectionHeader.tsx # Section title component
-├── site.config.ts       # ← All business content here
-├── tailwind.config.js   # Theme colors & design tokens
-└── next.config.js       # Next.js config (static export)
-```
-
-## License
-
-MIT — free to use for any business.
+The [original template README](https://github.com/rohit96/export-website-template) states that the template is **MIT-licensed**. That attribution is preserved here. The original repository does not include a separate license file or copyright notice; no new ownership claim is made for the template or third-party media. Confirm usage rights for factory and other third-party assets independently.
+# ammarPack
